@@ -41,6 +41,7 @@ export default function MkdSDK() {
 
     // check if there is no error / if it is successful
     if (!data.error) {
+      localStorage.setItem("token", data.token);
     } else {
     }
   };

@@ -35,13 +35,20 @@ const AdminLoginPage = () => {
     let sdk = new MkdSDK();
     //TODO
     const loginData = await sdk.login(data.email, data.password, "admin");
-    console.log(loginData);
     // check if there is no error / if it is successful
     if (!loginData.error) {
       // store loginData in local storage
       localStorage.setItem("token", loginData.token);
       localStorage.setItem("role", loginData.role);
       localStorage.setItem("user", loginData);
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          user: loginData.user_id,
+          token: loginData.token,
+          role: loginData.role,
+        },
+      });
       // call snackbar
       showToast(toastDispatch, "Login Successful");
     } else {

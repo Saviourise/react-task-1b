@@ -134,10 +134,7 @@ export default function MkdSDK() {
     // Receive response
     const data = await rawData.json();
 
-    // check if there is no error / if it is successful
-    if (data.status === 200) {
-    } else {
-    }
+    return data;
   };
 
   return this;

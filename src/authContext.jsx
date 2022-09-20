@@ -17,9 +17,9 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: localStorage.getItem("user"),
-        token: localStorage.getItem("token"),
-        role: localStorage.getItem("role"),
+        user: action.payload.user,
+        token: action.payload.token,
+        role: action.payload.role,
       };
     case "LOGOUT":
       localStorage.clear();
@@ -50,6 +50,19 @@ const AuthProvider = ({ children }) => {
 
   React.useEffect(() => {
     //TODO
+    const role = localStorage.getItem("role");
+    if (role) {
+      sdk
+        .check(role)
+        .then((res) => {
+          if (res.error) {
+            tokenExpireError(dispatch, "TOKEN_EXPIRED");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   return (

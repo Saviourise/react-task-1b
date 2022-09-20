@@ -116,7 +116,15 @@ const AdminDashboardPage = () => {
           ))}
         </div>
         <div className="prevNextBtns">
-          <button className="prevBtn">Previous</button>
+          <button
+            className="prevBtn"
+            onClick={() => {
+              setPage(page - 1);
+              getData();
+            }}
+          >
+            Previous
+          </button>
           <button
             className="nextBtn"
             onClick={() => {

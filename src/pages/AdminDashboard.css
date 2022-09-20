@@ -1,0 +1,114 @@
+.dashboardPage {
+  padding: 50px;
+}
+
+.dashboardBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  width: 128px;
+  background: #9bff00;
+  transition: 0.3s;
+  border-radius: 40px;
+}
+
+.dashboardBtn:hover {
+  background: #69ad04;
+}
+
+.dashboardnav,
+.dashboardTopic {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.dashboardTopic > div {
+  background: whitesmoke;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboardTopic > div > span {
+  padding: 0 8px;
+}
+
+.dashboardTopic > div > span:nth-child(3) {
+  background: #9bff00;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.dashboardTableTitle > span > span,
+.dashboardTableItem > span > span {
+  margin-right: 20px;
+}
+
+.dashboardTableTitle > span,
+.dashboardTableItem > span {
+  display: flex;
+  align-items: center;
+}
+
+.dashboardTableTitle > span:nth-child(1),
+.dashboardTableItem > span:nth-child(1) {
+  width: 50%;
+}
+
+.dashboardTableTitle > span:nth-child(2),
+.dashboardTableItem > span:nth-child(2) {
+  width: 40%;
+}
+
+.dashboardTableTitle > span:nth-child(3),
+.dashboardTableItem > span:nth-child(3) {
+  width: 10%;
+  justify-content: flex-end;
+}
+
+.dashboardTable {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.dashboardTableTitle {
+  display: flex;
+  padding: 7px 24px;
+}
+.dashboardTableItem {
+  display: flex;
+  border: 1px solid #e0e0e0;
+  padding: 7px 24px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  height: 80px;
+}
+
+.dashboardTableItem > span > span:nth-child(2) {
+  display: flex;
+  align-items: center;
+}
+
+.dashboardTableItem .titleImg {
+  width: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.dashboardTableItem .authorImg {
+  width: 20px;
+  object-fit: cover;
+  border-radius: 50%;
+  height: 20px;
+  margin-right: 20px;
+}

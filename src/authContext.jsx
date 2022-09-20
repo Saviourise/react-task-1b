@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import MkdSDK from "./utils/MkdSDK";
+import {renderRoutes} from './main';
 
 export const AuthContext = React.createContext();
 
@@ -17,9 +18,9 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
-        token: action.payload.token,
-        role: action.payload.role,
+        user: localStorage.getItem("user"),
+        token: localStorage.getItem("token"),
+        role: localStorage.getItem("role"),
       };
     case "LOGOUT":
       localStorage.clear();
@@ -57,6 +58,8 @@ const AuthProvider = ({ children }) => {
         .then((res) => {
           if (res.error) {
             tokenExpireError(dispatch, "TOKEN_EXPIRED");
+          } else {
+            renderRoutes(role);
           }
         })
         .catch((err) => {

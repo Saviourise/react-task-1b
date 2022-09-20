@@ -41,16 +41,14 @@ const AdminLoginPage = () => {
       localStorage.setItem("token", loginData.token);
       localStorage.setItem("role", loginData.role);
       localStorage.setItem("user", loginData);
+      // dispatch login action
       dispatch({
         type: "LOGIN",
-        payload: {
-          user: loginData.user_id,
-          token: loginData.token,
-          role: loginData.role,
-        },
       });
       // call snackbar
       showToast(toastDispatch, "Login Successful");
+      // redirect to dashboard
+      navigate("/admin/dashboard");
     } else {
     }
   };

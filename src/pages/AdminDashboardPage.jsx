@@ -1,46 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AdminDashboard.css";
 import { AiOutlineUser } from "react-icons/ai";
 import { GoPrimitiveDot } from "react-icons/go";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoMdArrowUp } from "react-icons/io";
+import { AuthContext } from "../authContext";
+import MkdSDK from "../utils/MkdSDK";
 
 const AdminDashboardPage = () => {
-  const [data] = React.useState([
+  const { dispatch } = React.useContext(AuthContext);
+
+  const [data, setList] = React.useState([
     {
       id: 1,
-      image: "https://i.imgur.com/0y0y0y0.jpg",
-      title:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit wdjboc ikhwevjibw viubgejklsd uig kl iu bGJ bui gJKNvui",
-      author: "John Doe",
-      authorImg: "https://i.imgur.com/0y0y0y0.jpg",
-      liked: 300,
-    },
-    {
-      id: 2,
-      image: "https://i.imgur.com/0y0y0y0.jpg",
-      author: "John Doe",
-      title: "John Doe",
-      authorImg: "https://i.imgur.com/0y0y0y0.jpg",
-      liked: 300,
-    },
-    {
-      id: 3,
-      image: "https://i.imgur.com/0y0y0y0.jpg",
-      title: "John Doe",
-      author: "John Doe",
-      authorImg: "https://i.imgur.com/0y0y0y0.jpg",
-      liked: 300,
-    },
-    {
-      id: 4,
-      image: "https://i.imgur.com/0y0y0y0.jpg",
-      title: "John Doe",
-      authorImg: "https://i.imgur.com/0y0y0y0.jpg",
-      author: "John Doe",
-      liked: 300,
+      photo: "https://i.imgur.com/0y0y0y0.jpg",
+      title: "Loading...",
+      username: "...",
+      like: 0,
     },
   ]);
+
+  const [page, setPage] = useState(1);
+
+  let sdk = new MkdSDK();
+
+  const getData = () => {
+    sdk
+      .callRestAPI({ page: page, limit: 10 }, "GET")
+      .then((res) => {
+        setPage(res.page);
+        setList(res.list);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
       <div className="w-full h-screen text-gray-700 dashboardPage">
@@ -48,7 +46,15 @@ const AdminDashboardPage = () => {
           <h1 className="text-5xl">
             <b>APP</b>
           </h1>
-          <button className="dashboardBtn">
+          <button
+            className="dashboardBtn"
+            onClick={() => {
+              dispatch({
+                type: "LOGOUT",
+              });
+              window.location.href = "/admin/login";
+            }}
+          >
             <AiOutlineUser className="mr-2" />
             <span>Logout</span>
           </button>
@@ -72,38 +78,54 @@ const AdminDashboardPage = () => {
             <span>#</span>
             <span>Title</span>
           </span>
-          <span>Author</span>
+          <span>username</span>
           <span>
-            Most Liked <IoIosArrowDown style={{ marginLeft: 10 }} />
+            Most liked <IoIosArrowDown style={{ marginLeft: 10 }} />
           </span>
         </div>
         <div className="dashboardTable">
           {data.map((item) => (
             <div className="dashboardTableItem" key={item.id}>
               <span>
-                <span>0{item.id}</span>
+                <span>
+                  {item.id < 10 && 0}
+                  {item.id}
+                </span>
                 <span>
                   <img
-                    src={item.image}
+                    src={item.photo}
                     className="titleImg"
-                    alt={item.author}
+                    alt={item.username}
                   />
                   {item.title}
                 </span>
               </span>
               <span>
                 <img
-                  src={item.authorImg}
+                  src={item.photo}
                   className="authorImg"
-                  alt={item.author}
+                  alt={item.username}
                 />
-                {item.author}
+                {item.username}
               </span>
               <span>
-                {item.liked} <IoMdArrowUp style={{ marginLeft: 10 }} />
+                {item.like}{" "}
+                <IoMdArrowUp style={{ marginLeft: 10, color: "#9bff00" }} />
               </span>
             </div>
           ))}
+        </div>
+        <div className="prevNextBtns">
+          <button className="prevBtn">Previous</button>
+          <button
+            className="nextBtn"
+            onClick={() => {
+              setPage(page + 1);
+              getData();
+            }}
+          >
+            Next
+          </button>
         </div>
       </div>
     </>

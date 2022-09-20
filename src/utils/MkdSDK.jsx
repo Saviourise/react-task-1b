@@ -2,7 +2,7 @@ export default function MkdSDK() {
   this._baseurl = "https://reacttask.mkdlabs.com";
   this._project_id = "reacttask";
   this._secret = "5fchxn5m8hbo6jcxiq3xddofodoacskye";
-  this._table = "";
+  this._table = "video";
   this._custom = "";
   this._method = "";
 
@@ -56,16 +56,17 @@ export default function MkdSDK() {
   this.callRestAPI = async function (payload, method) {
     const header = {
       "Content-Type": "application/json",
-      "x-project": base64Encode,
+      "x-project":
+        "cmVhY3R0YXNrOmQ5aGVkeWN5djZwN3p3OHhpMzR0OWJtdHNqc2lneTV0Nw==",
       Authorization: "Bearer " + localStorage.getItem("token"),
     };
 
     switch (method) {
       case "GET":
         const getResult = await fetch(
-          this._baseurl + `/v1/api/rest/${this._table}/GET`,
+           `${this._baseurl}/v1/api/rest/${this._table}/PAGINATE`,
           {
-            method: "post",
+            method: "POST",
             headers: header,
             body: JSON.stringify(payload),
           }
@@ -73,6 +74,10 @@ export default function MkdSDK() {
         const jsonGet = await getResult.json();
 
         if (getResult.status === 401) {
+          throw new Error(jsonGet.message);
+        }
+
+        if (getResult.status === 404) {
           throw new Error(jsonGet.message);
         }
 

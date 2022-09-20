@@ -12,9 +12,37 @@ export default function MkdSDK() {
   this.setTable = function (table) {
     this._table = table;
   };
-  
+
   this.login = async function (email, password, role) {
     //TODO
+
+    // Store parameters
+    this._email = email;
+    this._password = password;
+    this._role = role;
+
+    // Create request
+    const rawData = await fetch(`${this._baseurl}/v2/api/lambda/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-project":
+          "cmVhY3R0YXNrOjVmY2h4bjVtOGhibzZqY3hpcTN4ZGRvZm9kb2Fjc2t5ZQ==",
+      },
+      body: JSON.stringify({
+        email: this._email,
+        password: this._password,
+        role: this._role,
+      }),
+    });
+
+    // Receive response
+    const data = await rawData.json();
+
+    // check if there is no error / if it is successful
+    if (!data.error) {
+    } else {
+    }
   };
 
   this.getHeader = function () {
@@ -27,7 +55,7 @@ export default function MkdSDK() {
   this.baseUrl = function () {
     return this._baseurl;
   };
-  
+
   this.callRestAPI = async function (payload, method) {
     const header = {
       "Content-Type": "application/json",
@@ -55,7 +83,7 @@ export default function MkdSDK() {
           throw new Error(jsonGet.message);
         }
         return jsonGet;
-      
+
       case "PAGINATE":
         if (!payload.page) {
           payload.page = 1;
@@ -84,10 +112,11 @@ export default function MkdSDK() {
       default:
         break;
     }
-  };  
+  };
 
   this.check = async function (role) {
     //TODO
+
   };
 
   return this;

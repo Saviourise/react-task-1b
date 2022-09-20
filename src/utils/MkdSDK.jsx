@@ -117,6 +117,30 @@ export default function MkdSDK() {
   this.check = async function (role) {
     //TODO
 
+    // Store parameters
+    this._role = role;
+
+    // Create request
+    const rawData = await fetch(`${this._baseurl}/v2/api/lambda/check`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-project":
+          "cmVhY3R0YXNrOjVmY2h4bjVtOGhibzZqY3hpcTN4ZGRvZm9kb2Fjc2t5ZQ==",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        role: this._role,
+      }),
+    });
+
+    // Receive response
+    const data = await rawData.json();
+
+    // check if there is no error / if it is successful
+    if (data.status === 200) {
+    } else {
+    }
   };
 
   return this;

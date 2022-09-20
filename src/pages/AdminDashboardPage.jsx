@@ -38,7 +38,7 @@ const AdminDashboardPage = () => {
 
   React.useEffect(() => {
     getData();
-  }, []);
+  }, [page]);
   return (
     <>
       <div className="w-full h-screen text-gray-700 dashboardPage">
@@ -120,7 +120,6 @@ const AdminDashboardPage = () => {
             className="prevBtn"
             onClick={() => {
               setPage(page - 1);
-              getData();
             }}
           >
             Previous
@@ -129,7 +128,6 @@ const AdminDashboardPage = () => {
             className="nextBtn"
             onClick={() => {
               setPage(page + 1);
-              getData();
             }}
           >
             Next

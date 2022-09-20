@@ -39,11 +39,7 @@ export default function MkdSDK() {
     // Receive response
     const data = await rawData.json();
 
-    // check if there is no error / if it is successful
-    if (!data.error) {
-      localStorage.setItem("token", data.token);
-    } else {
-    }
+    return data;
   };
 
   this.getHeader = function () {
